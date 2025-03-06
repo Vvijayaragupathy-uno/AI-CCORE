@@ -8,23 +8,20 @@ def is_admin():
         st.session_state.is_admin = False
     return st.session_state.is_admin
 
-# Sidebar with public and admin access as a menu
+# Sidebar with admin access as a static menu
 def admin_login():
-    st.sidebar.header("Navigation Menu")
-    menu_selection = st.sidebar.selectbox("Choose Page", ("Public Page", "Admin"))
-    if menu_selection == "Admin":
-        if not is_admin():
-            password = st.sidebar.text_input("Enter Admin Password", type="password")
-            if st.sidebar.button("Login"):
-                if password == ADMIN_PASSWORD:
-                    st.session_state.is_admin = True
-                    st.sidebar.success("Logged in as Admin")
-                else:
-                    st.sidebar.error("Incorrect Password")
-        else:
-            st.sidebar.success("Logged in as Admin")
+    st.sidebar.title("Navigation Menu")
+    st.sidebar.header("Admin")
+    if not is_admin():
+        password = st.sidebar.text_input("Enter Admin Password", type="password")
+        if st.sidebar.button("Login"):
+            if password == ADMIN_PASSWORD:
+                st.session_state.is_admin = True
+                st.sidebar.success("Logged in as Admin")
+            else:
+                st.sidebar.error("Incorrect Password")
     else:
-        st.session_state.is_admin = False
+        st.sidebar.success("Logged in as Admin")
 
 # Admin panel
 def admin_panel():
