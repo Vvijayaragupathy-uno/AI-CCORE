@@ -1,7 +1,7 @@
 import streamlit as st
 
-# Admin password (for simplicity, hardcoded here; use environment variables for production)
-ADMIN_PASSWORD = "admin123"
+
+ADMIN_PASSWORD = "AICCORE2025"
 
 # Function to check admin access
 def is_admin():
