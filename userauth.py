@@ -8,16 +8,20 @@ def is_admin():
         st.session_state.is_admin = False
     return st.session_state.is_admin
 
-# Admin login form
+# Sidebar with public and admin access
 def admin_login():
-    st.sidebar.header("Admin Login")
-    password = st.sidebar.text_input("Enter Admin Password", type="password")
-    if st.sidebar.button("Login"):
-        if password == ADMIN_PASSWORD:
-            st.session_state.is_admin = True
-            st.sidebar.success("Logged in as Admin")
-        else:
-            st.sidebar.error("Incorrect Password")
+    st.sidebar.header("User Access")
+    access_mode = st.sidebar.radio("Select Mode", ("Public", "Admin"))
+    if access_mode == "Admin":
+        password = st.sidebar.text_input("Enter Admin Password", type="password")
+        if st.sidebar.button("Login"):
+            if password == ADMIN_PASSWORD:
+                st.session_state.is_admin = True
+                st.sidebar.success("Logged in as Admin")
+            else:
+                st.sidebar.error("Incorrect Password")
+    else:
+        st.session_state.is_admin = False
 
 # Admin panel
 def admin_panel():
