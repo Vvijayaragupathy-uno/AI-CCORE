@@ -2,13 +2,10 @@ import streamlit as st
 
 ADMIN_PASSWORD = "AICCORE2025"
 
-# Function to check admin access
 def is_admin():
     if "is_admin" not in st.session_state:
         st.session_state.is_admin = False
     return st.session_state.is_admin
-
-# Sidebar with admin access as a static menu
 def admin_login():
     st.sidebar.title("Navigation Menu")
     st.sidebar.header("Admin")
@@ -23,7 +20,6 @@ def admin_login():
     else:
         st.sidebar.success("Logged in as Admin")
 
-# Admin panel
 def admin_panel():
     st.header("Admin Panel")
     st.write("Welcome, Admin! You can update the data here.")
