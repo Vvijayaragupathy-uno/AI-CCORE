@@ -11,7 +11,7 @@ def main_app():
         st.write("Current Data:")
         st.write(st.session_state.data)
     else:
-        st.warning("No data available.")
+        st.warning("No data is  available.soon we will more data .be patient")
 
 # Run the app
 if __name__ == "__main__":
