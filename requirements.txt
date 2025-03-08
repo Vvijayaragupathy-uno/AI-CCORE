@@ -3,10 +3,10 @@ huggingface_hub
 pandas
 scrapegraph-py
 requests
-beautifulsoup4==4.12.2
-PyMuPDF==1.23.5
-requests==2.31.0
-langchain==0.0.346
-docarray==0.32.0
-sentence-transformers==2.2.2
+beautifulsoup4
+PyMuPDF
+requests
+langchain
+docarray==
+sentence-transformers
 together 
