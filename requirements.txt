@@ -10,3 +10,7 @@ langchain
 docarray
 sentence-transformers
 together 
+faiss-cpu 
+langchain-together 
+pydantic 
+typing-extensions
