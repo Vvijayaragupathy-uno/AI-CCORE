@@ -9,7 +9,7 @@ OpenAI,o1,Proprietary,-,200000,$15.00 ,$60.00 ,78.00%,91.80%,-,-,88.10%
 Google,Gemini 2.0 Flash Thinking,Proprietary,-,1000000,-,-,74.20%,-,-,-,-
 OpenAI,o1-preview,Proprietary,-,128000,$15.00 ,$60.00 ,73.30%,90.80%,-,-,-
 Deepseek,DeepSeek-R1,Open,671,131072,$0.55 ,$2.19 ,71.50%,90.80%,84.00%,92.20%,-
-chatgpt,GPT-4.5,Proprietary,-,128000,-,-,71.40%,90.00%,-,-,88.00%
+OpenAI,GPT-4.5,Proprietary,-,128000,-,-,71.40%,90.00%,-,-,88.00%
 Claude,Claude 3.5 Sonnet,Proprietary,-,200000,$3.00 ,$15.00 ,67.20%,90.40%,77.60%,87.10%,93.70%
 Qwen,QwQ-32B-Preview,Open,32.5,32768,$0.15 ,$0.20 ,65.20%,-,-,-,-
 Google,Gemini 2.0 Flash,Proprietary,-,1048576,-,-,62.10%,-,76.40%,-,-
@@ -18,7 +18,7 @@ Deepseek,DeepSeek-V3,Open,671,131072,$0.27 ,$1.10 ,59.10%,88.50%,75.90%,91.60%,-
 Google,Gemini 1.5 Pro,Proprietary,-,2097152,$2.50 ,$10.00 ,59.10%,85.90%,75.80%,74.90%,84.10%
 Microsoft,Phi-4,Open,14.7,16000,$0.07 ,$0.14 ,56.10%,84.80%,70.40%,75.50%,82.60%
 Xai,Grok-2,Proprietary,-,128000,$2.00 ,$10.00 ,56.00%,87.50%,75.50%,-,88.40%
-chatgpt,GPT-4o,Proprietary,-,128000,$2.50 ,$10.00 ,53.60%,88.00%,74.70%,-,-
+OpenAI,GPT-4o,Proprietary,-,128000,$2.50 ,$10.00 ,53.60%,88.00%,74.70%,-,-
 Google,Gemini 1.5 Flash,Proprietary,-,1048576,$0.15 ,$0.60 ,51.00%,78.90%,67.30%,-,74.30%
 Xai,Grok-2 mini,Proprietary,-,128000,-,-,51.00%,86.20%,72.00%,-,85.70%
 Meta,Llama 3.1 405B Instruct,Open,405,128000,$0.90 ,$0.90 ,50.70%,87.30%,73.30%,84.80%,89.00%
@@ -26,7 +26,7 @@ Meta,Llama 3.3 70B Instruct,Open,70,128000,$0.20 ,$0.20 ,50.50%,86.00%,68.90%,-,
 Claude,Claude 3 Opus,Proprietary,-,200000,$15.00 ,$75.00 ,50.40%,86.80%,68.50%,83.10%,84.90%
 Qwen,Qwen2.5 32B Instruct,Open,32.5,131072,-,-,49.50%,83.30%,69.00%,-,88.40%
 Qwen,Qwen2.5 72B Instruct,Open,72.7,131072,$0.35 ,$0.40 ,49.00%,-,71.10%,-,86.60%
-chatgpt,GPT-4 Turbo,Proprietary,-,128000,$10.00 ,$30.00 ,48.00%,86.50%,-,86.00%,87.10%
+OpenAI,GPT-4 Turbo,Proprietary,-,128000,$10.00 ,$30.00 ,48.00%,86.50%,-,86.00%,87.10%
 Amazon,Nova Pro,Proprietary,-,300000,$0.80 ,$3.20 ,46.90%,85.90%,-,85.40%,89.00%
 Meta,Llama 3.2 90B Instruct,Open,90,128000,$0.35 ,$0.40 ,46.70%,86.00%,-,-,-
 Qwen,Qwen2.5 14B Instruct,Open,14.7,131072,-,-,45.50%,79.70%,63.70%,-,83.50%
@@ -36,19 +36,19 @@ Amazon,Nova Lite,Proprietary,-,300000,$0.06 ,$0.24 ,42.00%,80.50%,-,80.20%,85.40
 Meta,Llama 3.1 70B Instruct,Open,70,128000,$0.20 ,$0.20 ,41.70%,83.60%,66.40%,79.60%,80.50%
 Claude,Claude 3.5 Haiku,Proprietary,-,200000,$0.80 ,$4.00 ,41.60%,-,65.00%,83.10%,88.10%
 Claude,Claude 3 Sonnet,Proprietary,-,200000,$3.00 ,$15.00 ,40.40%,79.00%,56.80%,78.90%,73.00%
-chatgpt,GPT-4o mini,Proprietary,-,128000,$0.15 ,$0.60 ,40.20%,82.00%,-,79.70%,87.20%
+OpenAI,GPT-4o mini,Proprietary,-,128000,$0.15 ,$0.60 ,40.20%,82.00%,-,79.70%,87.20%
 Amazon,Nova Micro,Proprietary,-,128000,$0.04 ,$0.14 ,40.00%,77.60%,-,79.30%,81.10%
 Google,Gemini 1.5 Flash 8B,Proprietary,8,1048576,$0.07 ,$0.30 ,38.40%,-,58.70%,-,-
 Together,Jamba 1.5 Large,Open,398,256000,$2.00 ,$8.00 ,36.90%,81.20%,53.50%,-,-
 Microsoft,Phi-3.5-MoE-instruct,Open,60,128000,-,-,36.80%,78.90%,54.30%,-,70.70%
 Qwen,Qwen2.5 7B Instruct,Open,7.6,131072,$0.30 ,$0.30 ,36.40%,-,56.30%,-,84.80%
 Xai,Grok-1.5,Proprietary,-,128000,-,-,35.90%,81.30%,51.00%,-,74.10%
-chatgpt,GPT-4,Proprietary,-,32768,$30.00 ,$60.00 ,35.70%,86.40%,-,80.90%,67.00%
+OpenAI,GPT-4,Proprietary,-,32768,$30.00 ,$60.00 ,35.70%,86.40%,-,80.90%,67.00%
 Claude,Claude 3 Haiku,Proprietary,-,200000,$0.25 ,$1.25 ,33.30%,75.20%,-,78.40%,75.90%
 Meta,Llama 3.2 11B Instruct,Open,10.6,128000,$0.06 ,$0.06 ,32.80%,73.00%,-,-,-
 Meta,Llama 3.2 3B Instruct,Open,3.2,128000,$0.01 ,$0.02 ,32.80%,63.40%,-,-,-
 Together,Jamba 1.5 Mini,Open,52,256144,$0.20 ,$0.40 ,32.30%,69.70%,42.50%,-,-
-chatgpt,GPT-3.5 Turbo,Proprietary,-,16385,$0.50 ,$1.50 ,30.80%,69.80%,-,70.20%,68.00%
+OpenAI,GPT-3.5 Turbo,Proprietary,-,16385,$0.50 ,$1.50 ,30.80%,69.80%,-,70.20%,68.00%
 Meta,Llama 3.1 8B Instruct,Open,8,131072,$0.03 ,$0.03 ,30.40%,69.40%,48.30%,59.50%,72.60%
 Microsoft,Phi-3.5-mini-instruct,Open,3.8,128000,$0.10 ,$0.10 ,30.40%,69.00%,47.40%,-,62.80%
 Google,Gemini 1.0 Pro,Proprietary,-,32760,$0.50 ,$1.50 ,27.90%,71.80%,-,-,-
