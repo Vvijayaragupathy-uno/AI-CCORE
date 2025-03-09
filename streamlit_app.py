@@ -49,5 +49,7 @@ if __name__ == "__main__":
         admin_login_page()
     elif current_page == "admin_panel" and is_admin():
         admin_panel()
+    elif current_page == "visualization":
+        visualization_page()
     else: 
         main_app()
