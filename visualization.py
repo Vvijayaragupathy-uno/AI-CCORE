@@ -4,8 +4,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
-from chatbot import chatbot
-
 def visualization_page():
 
     if st.button("<"):
