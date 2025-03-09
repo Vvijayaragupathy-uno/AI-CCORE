@@ -22,6 +22,9 @@ def admin_login():
             st.session_state.show_login_page = False
             st.session_state.page = "public"
             st.rerun()  # Rerun the app to return to the public page
+    if st.sidebar.button("Visualization"):
+        st.session_state.page = "visualization"
+        st.rerun() 
 
 def admin_login_page():
     st.header("Admin Login")
