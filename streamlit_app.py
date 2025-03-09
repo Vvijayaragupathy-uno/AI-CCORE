@@ -1,6 +1,7 @@
 import streamlit as st
 from userauth import admin_login, is_admin, admin_panel, admin_login_page
 from llm import get_llm_response  # Import the updated get_llm_response function
+from visualization import visualization_page
 
 # Main app
 def main_app():
