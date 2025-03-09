@@ -13,7 +13,7 @@ def visualization_page():
     st.write("Explore the performance and cost-effectiveness of different models.")
 
     # Load the data
-    data = pd.read_csv(r'D:\AICCORE\models benchmark1.csv')
+    data = pd.read_csv('models benchmark1.csv')
 
     # Convert 'Parameters (B)' column to numeric, coercing errors to NaN
     data['Parameters (B)'] = pd.to_numeric(data['Parameters (B)'], errors='coerce')
