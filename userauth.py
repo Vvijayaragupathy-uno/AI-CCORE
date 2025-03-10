@@ -3,7 +3,7 @@ import streamlit as st
 from github_utils import upload_file_to_github
 from scrapegraph_py import Client
 
-
+PASSWORD = st.secrets["PASSWORD"]
 def is_admin():
     if "is_admin" not in st.session_state:
         st.session_state.is_admin = False
@@ -33,7 +33,7 @@ def admin_login_page():
     login_col, cancel_col = st.columns([1, 1])
     with login_col:
         if st.button("Login"):
-            if password == ADMIN_PASSWORD:
+            if password = PASSWORD:
                 st.session_state.is_admin = True
                 st.session_state.show_login_page = False
                 st.session_state.page = "admin_panel"
