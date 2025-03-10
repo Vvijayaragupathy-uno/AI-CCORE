@@ -19,3 +19,4 @@ seaborn
 groq
 langchain-community
 langchain-groq
+langchain_huggingface
