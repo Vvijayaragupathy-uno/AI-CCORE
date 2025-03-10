@@ -16,3 +16,6 @@ pydantic
 typing-extensions
 matplotlib
 seaborn
+groq
+langchain-community
+langchain-groq
