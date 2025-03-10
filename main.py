@@ -3,7 +3,7 @@ import os
 from llm import load_and_split_document, create_vector_store, rag_with_groq, setup_rag
 from langchain_groq import ChatGroq 
 from visualization import visualization_page
-
+from userauth import admin_login, is_admin, admin_panel, admin_login_page
 
 GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
 MODEL_NAME = "llama3-70b-8192" 
