@@ -1,4 +1,5 @@
 streamlit
+PyGithub
 huggingface_hub
 pandas
 scrapegraph-py
