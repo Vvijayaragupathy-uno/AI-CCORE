@@ -3,6 +3,49 @@ import streamlit as st
 from github_utils import upload_file_to_github
 from scrapegraph_py import Client
 
+
+def is_admin():
+    if "is_admin" not in st.session_state:
+        st.session_state.is_admin = False
+    return st.session_state.is_admin
+
+def admin_login():
+    st.sidebar.title("AICCORE")
+    if not is_admin():
+        if st.sidebar.button("Admin"):
+            st.session_state.show_login_page = True
+            st.rerun()  
+    else:
+        st.sidebar.success("Logged in as Admin")
+        if st.sidebar.button("Logout"):
+            st.session_state.is_admin = False
+            st.session_state.show_login_page = False
+            st.session_state.page = "public"
+            st.rerun()  
+    if st.sidebar.button("Visualization"):
+        st.session_state.page = "visualization"
+        st.rerun() 
+
+def admin_login_page():
+    st.header("Admin Login")
+    st.write("Please enter the admin password to access the admin panel.")
+    password = st.text_input("Enter Admin Password", type="password")
+    login_col, cancel_col = st.columns([1, 1])
+    with login_col:
+        if st.button("Login"):
+            if password == ADMIN_PASSWORD:
+                st.session_state.is_admin = True
+                st.session_state.show_login_page = False
+                st.session_state.page = "admin_panel"
+                st.rerun() 
+            else:
+                st.error("Incorrect Password")
+    with cancel_col:
+        if st.button("Cancel"):
+            st.session_state.show_login_page = False
+            st.session_state.page = "public"
+            st.rerun()  
+
 def admin_panel():
     st.header("Admin Panel")
     st.write("Welcome, Admin! You can upload new documents (TXT, CSV, or PDF) to the LLM documents folder here.")
