@@ -23,7 +23,6 @@ def admin_panel():
                 message="Create llm_documents folder",
                 content="",  
                 branch="main"  )
-            )
             st.info(f"Created '{LLM_DOCUMENTS_FOLDER}' folder in the repository.")
 
         try:
