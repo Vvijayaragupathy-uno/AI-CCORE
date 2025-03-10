@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 from llm import get_llm_response
 
 # Fetch Research Papers Using arXiv API
-def fetch_research_papers(query: str, max_results: int = 5) -> List[Dict]:
+def fetch_research_papers(query: str, max_results: int = 5) :
     url = "http://export.arxiv.org/api/query"
     params = {
         "search_query": query,
@@ -16,7 +16,7 @@ def fetch_research_papers(query: str, max_results: int = 5) -> List[Dict]:
     if response.status_code != 200:
         raise Exception(f"Failed to fetch research papers: {response.status_code}")
 
-    # Parse the response (XML format)
+    
     root = ET.fromstring(response.text)
     papers = []
     for entry in root.findall("{http://www.w3.org/2005/Atom}entry"):
@@ -99,9 +99,9 @@ def article_page():
                         if "qa_history" not in st.session_state:
                             st.session_state.qa_history = []
                         st.session_state.qa_history.append({"question": question, "answer": answer})
-                        st.rerun()  # Refresh to display the new Q&A
+                        st.rerun()  
 
-                # Allow custom questions
+                
                 with st.form(key=f"custom_question_form_{i}"):
                     custom_question = st.text_input("Ask your own question:", key=f"custom_{i}")
                     if st.form_submit_button("Submit"):
