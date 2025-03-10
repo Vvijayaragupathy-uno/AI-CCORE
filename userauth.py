@@ -1,6 +1,8 @@
 import streamlit as st
-
-ADMIN_PASSWORD = "AICCORE2025"
+import os
+from admin_search import get_llm_response
+PASSWORD = = st.secrets["PASSWORD"]
+ADMIN_PASSWORD = PASSWORD
 
 def is_admin():
     if "is_admin" not in st.session_state:
@@ -8,20 +10,18 @@ def is_admin():
     return st.session_state.is_admin
 
 def admin_login():
-    st.sidebar.title("Navigation Menu")
-    st.sidebar.header("Admin")
+    st.sidebar.title("AICCORE")
     if not is_admin():
-        st.sidebar.info("Click on 'Admin' to access the admin login page.")
         if st.sidebar.button("Admin"):
             st.session_state.show_login_page = True
-            st.rerun()  # Rerun the app to show the login page
+            st.rerun()  
     else:
         st.sidebar.success("Logged in as Admin")
         if st.sidebar.button("Logout"):
             st.session_state.is_admin = False
             st.session_state.show_login_page = False
             st.session_state.page = "public"
-            st.rerun()  # Rerun the app to return to the public page
+            st.rerun()  
     if st.sidebar.button("Visualization"):
         st.session_state.page = "visualization"
         st.rerun() 
@@ -37,62 +37,84 @@ def admin_login_page():
                 st.session_state.is_admin = True
                 st.session_state.show_login_page = False
                 st.session_state.page = "admin_panel"
-                st.rerun()  # Rerun the app to show the admin panel
+                st.rerun() 
             else:
                 st.error("Incorrect Password")
     with cancel_col:
         if st.button("Cancel"):
             st.session_state.show_login_page = False
             st.session_state.page = "public"
-            st.rerun()  # Rerun the app to return to the public page
+            st.rerun()  
+        
 
 def admin_panel():
     st.header("Admin Panel")
-    st.write("Welcome, Admin! You can update the data here.")
+    st.write("Welcome, Admin! You can upload new documents (TXT or CSV or PDF) to the LLM documents folder here.")
+    uploaded_file = st.file_uploader("Upload a new document", type=["txt", "csv","pdf"])
+    if uploaded_file is not None:
+        llm_documents_folder = "llm_documents"
+        os.makedirs(llm_documents_folder, exist_ok=True)  
+        file_path = os.path.join(llm_documents_folder, uploaded_file.name)
+        with open(file_path, "wb") as f:
+            f.write(uploaded_file.getbuffer())
+        st.success(f"Document '{uploaded_file.name}' uploaded successfully to the LLM documents folder!")
 
-    # Load existing data (e.g., from a CSV file)
-    try:
-        data = st.session_state.get("data", [])
-        if not data:
-            st.warning("No data found. Upload a file to start.")
+    st.header("Search Assistant")
+    st.write("This  generates responses using a Deepseek r1 think model.")
+
+    
+    prompt = st.text_input(" prompt to start search")
+    
+    # Toggle for streaming
+    stream = st.checkbox("Enable streaming", value=True) 
+    if st.button("Generate Response"):
+        if prompt:
+            with st.spinner("Generating response..."):
+                if stream:
+                    # Stream the response incrementally
+                    response_container = st.empty()  # Placeholder for the response
+                    full_response = ""
+                    response_stream = get_llm_response(prompt, stream=True)
+                    for chunk in response_stream:
+                        full_response += chunk
+                        response_container.write(full_response)  # Update the response in real-time
+                else:
+                    # Generate the full response at once
+                    response = get_llm_response(prompt, stream=False)
+                    
+                    # Extract the thinking process and final answer
+                    if "<think>" in response and "</think>" in response:
+                        thinking_process = response.split("<think>")[1].split("</think>")[0]
+                        final_answer = response.split("</think>")[1].strip()
+                    else:
+                        thinking_process = None
+                        final_answer = response
+                    st.write("Final Answer:")
+                    st.write(final_answer)
         else:
-            st.write("Current Data:")
-            st.write(data)
+            st.warning("Please enter a prompt to generate a response.")
 
-        # Allow admin to upload a new file
-        uploaded_file = st.file_uploader("Upload a new CSV file", type=["csv"])
-        if uploaded_file is not None:
-            import pandas as pd
-            new_data = pd.read_csv(uploaded_file)
-            st.session_state.data = new_data
-            st.success("Data updated successfully!")
-
-        # Add ScrapeGraphAI functionality to the admin panel
-        st.header("Web Scraping with ScrapeGraphAI")
-        url = st.text_input("Enter the URL to scrape:")
-        user_prompt = st.text_input("Enter your prompt (e.g., 'Extract the main heading and description'):")
-        
-        if st.button("Scrape Content"):
-            if url and user_prompt:
-                with st.spinner("Scraping web content..."):
-                    try:
-                        from scrapegraph_py import Client
-                        client = Client(api_key="sgai-f313f2c7-73e2-41e8-adcf-9061e01eca53")
-                        scraped_data = client.smartscraper(
-                            website_url=url,
-                            user_prompt=user_prompt
-                        )
-                        st.session_state.scraped_data = scraped_data
-                        st.success("Scraping completed!")
-                    except Exception as e:
-                        st.error(f"Error during scraping: {e}")
-            else:
-                st.warning("Please enter a valid URL and prompt.")
-
-        # Display scraped data
-        if "scraped_data" in st.session_state:
-            st.subheader("Scraped Content")
-            st.write(st.session_state.scraped_data)
-
-    except Exception as e:
-        st.error(f"Error: {e}")
+    st.header("Web Scraping with ScrapeGraphAI")
+    url = st.text_input("Enter the URL to scrape:")
+    user_prompt = st.text_input("Enter your prompt (e.g., 'Extract the main heading and description'):")
+    ScrapeGraphAI_KEY = st.secrets["ScrapeGraphAI_KEY"]  
+    if st.button("Scrape Content"):
+        if url and user_prompt:
+            with st.spinner("Scraping web content..."):
+                try:
+                    from scrapegraph_py import Client
+                    client = Client(api_key="ScrapeGraphAI_KEY")
+                    scraped_data = client.smartscraper(
+                        website_url=url,
+                        user_prompt=user_prompt
+                    )
+                    st.session_state.scraped_data = scraped_data
+                    st.success("Scraping completed!")
+                except Exception as e:
+                    st.error(f"Error during scraping: {e}")
+        else:
+            st.warning("Please enter a valid URL and prompt.")
+                 
+    if "scraped_data" in st.session_state:
+        st.subheader("Scraped Content")
+        st.write(st.session_state.scraped_data)
