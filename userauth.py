@@ -33,7 +33,7 @@ def admin_login_page():
     login_col, cancel_col = st.columns([1, 1])
     with login_col:
         if st.button("Login"):
-            if password = PASSWORD:
+            if password == PASSWORD:
                 st.session_state.is_admin = True
                 st.session_state.show_login_page = False
                 st.session_state.page = "admin_panel"
