@@ -1,6 +1,6 @@
-from github import Github
-import os
+# app.py
 import streamlit as st
+from github_utils import upload_file_to_github
 from scrapegraph_py import Client
 
 def admin_panel():
@@ -10,39 +10,20 @@ def admin_panel():
     if uploaded_file is not None:
         GITHUB_TOKEN = st.secrets["API_KEY"]
         REPO_NAME = "Vvijayaragupathy-uno/AI-CCORE"  
-        LLM_folder= "llm_documents"
-        g = Github(GITHUB_TOKEN)
-        repo = g.get_repo(REPO_NAME)
-        file_content = uploaded_file.getvalue()
-        file_path = f"{LLM_folder}/{uploaded_file.name}"
-        try:
-            repo.get_contents(LLM_DOCUMENTS_FOLDER)
-        except:
-            repo.create_file(
-                path=f"{LLM_DOCUMENTS_FOLDER}/.gitkeep",
-                message="Create llm_documents folder",
-                content="",  
-                branch="main"  )
-            st.info(f"Created '{LLM_DOCUMENTS_FOLDER}' folder in the repository.")
+        LLM_FOLDER = "llm_documents"
+        
+        # Use the GitHub utility function
+        result_message = upload_file_to_github(uploaded_file, LLM_FOLDER, REPO_NAME, GITHUB_TOKEN)
+        st.success(result_message)
 
-        try:
-            
-            existing_file = repo.get_contents(file_path)
-            repo.update_file(file_path, f"Update {uploaded_file.name} via Streamlit", file_content, existing_file.sha)
-            st.success(f"Document '{uploaded_file.name}' updated successfully in the LLM documents folder on GitHub!")
-        except:
-            
-            repo.create_file(file_path, f"Add {uploaded_file.name} via Streamlit", file_content)
-            st.success(f"Document '{uploaded_file.name}' uploaded successfully to the LLM documents folder on GitHub!")
     st.header("Search Assistant")
     st.write("This generates responses using a Deepseek r1 think model.")
     prompt = st.text_input("Prompt to start search")
     stream = st.checkbox("Enable streaming", value=True) 
-    if st.button("Generate Response"):
+    if st.button("find"):
         if prompt:
             with st.spinner("Generating response..."):
                 if stream:
-                   
                     response_container = st.empty() 
                     full_response = ""
                     response_stream = get_llm_response(prompt, stream=True)
@@ -50,10 +31,7 @@ def admin_panel():
                         full_response += chunk
                         response_container.write(full_response)  
                 else:
-                    
                     response = get_llm_response(prompt, stream=False)
-                    
-                    # Extract the thinking process and final answer
                     if "<think>" in response and "</think>" in response:
                         thinking_process = response.split("<think>")[1].split("</think>")[0]
                         final_answer = response.split("</think>")[1].strip()
@@ -64,6 +42,7 @@ def admin_panel():
                     st.write(final_answer)
         else:
             st.warning("Please enter a prompt to generate a response.")
+
     st.header("Web Scraping with ScrapeGraphAI")
     url = st.text_input("Enter the URL to scrape:")
     user_prompt = st.text_input("Enter your prompt (e.g., 'Extract the main heading and description'):")
@@ -72,7 +51,7 @@ def admin_panel():
         if url and user_prompt:
             with st.spinner("Scraping web content..."):
                 try:
-                    client = Client(api_key="ScrapeGraphAI_KEY")
+                    client = Client(api_key=ScrapeGraphAI_KEY)
                     scraped_data = client.smartscraper(
                         website_url=url,
                         user_prompt=user_prompt
