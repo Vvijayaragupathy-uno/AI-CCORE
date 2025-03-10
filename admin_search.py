@@ -1,5 +1,6 @@
 from typing import Generator, Union
 from together import Together
+import streamlit as st
 import os
 
 DEEPSEEK_API_KEY = st.secrets["DEEPSEEK_API_KEY"]
