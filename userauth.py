@@ -1,69 +1,44 @@
-import streamlit as st
+from github import Github
 import os
-from admin_search import get_llm_response
-PASSWORD = st.secrets["PASSWORD"]
-ADMIN_PASSWORD = PASSWORD
-
-def is_admin():
-    if "is_admin" not in st.session_state:
-        st.session_state.is_admin = False
-    return st.session_state.is_admin
-
-def admin_login():
-    st.sidebar.title("AICCORE")
-    if not is_admin():
-        if st.sidebar.button("Admin"):
-            st.session_state.show_login_page = True
-            st.rerun()  
-    else:
-        st.sidebar.success("Logged in as Admin")
-        if st.sidebar.button("Logout"):
-            st.session_state.is_admin = False
-            st.session_state.show_login_page = False
-            st.session_state.page = "public"
-            st.rerun()  
-    if st.sidebar.button("Visualization"):
-        st.session_state.page = "visualization"
-        st.rerun() 
-
-def admin_login_page():
-    st.header("Admin Login")
-    st.write("Please enter the admin password to access the admin panel.")
-    password = st.text_input("Enter Admin Password", type="password")
-    login_col, cancel_col = st.columns([1, 1])
-    with login_col:
-        if st.button("Login"):
-            if password == ADMIN_PASSWORD:
-                st.session_state.is_admin = True
-                st.session_state.show_login_page = False
-                st.session_state.page = "admin_panel"
-                st.rerun() 
-            else:
-                st.error("Incorrect Password")
-    with cancel_col:
-        if st.button("Cancel"):
-            st.session_state.show_login_page = False
-            st.session_state.page = "public"
-            st.rerun()  
-        
 
 def admin_panel():
     st.header("Admin Panel")
-    st.write("Welcome, Admin! You can upload new documents (TXT or CSV or PDF) to the LLM documents folder here.")
-    uploaded_file = st.file_uploader("Upload a new document", type=["txt", "csv","pdf"])
+    st.write("Welcome, Admin! You can upload new documents (TXT, CSV, or PDF) to the LLM documents folder here.")
+
+    # File uploader
+    uploaded_file = st.file_uploader("Upload a new document", type=["txt", "csv", "pdf"])
+    
     if uploaded_file is not None:
-        llm_documents_folder = "llm_documents"
-        os.makedirs(llm_documents_folder, exist_ok=True)  
-        file_path = os.path.join(llm_documents_folder, uploaded_file.name)
-        with open(file_path, "wb") as f:
-            f.write(uploaded_file.getbuffer())
-        st.success(f"Document '{uploaded_file.name}' uploaded successfully to the LLM documents folder!")
+        # GitHub credentials (use Streamlit secrets)
+        GITHUB_TOKEN = st.secrets["API_KEY"]
+        REPO_NAME = "Vvijayaragupathy-uno/AI-CCORE"  # Your repository
+        LLM_DOCUMENTS_FOLDER = "llm_documents"  # Folder in your repository
+
+        # Initialize GitHub API
+        g = Github(GITHUB_TOKEN)
+        repo = g.get_repo(REPO_NAME)
+
+        # Read the uploaded file
+        file_content = uploaded_file.getvalue()
+
+        # Define the file path in the repository
+        file_path = f"{LLM_DOCUMENTS_FOLDER}/{uploaded_file.name}"
+
+        try:
+            # Check if the file already exists in the repository
+            existing_file = repo.get_contents(file_path)
+            # Update the file
+            repo.update_file(file_path, f"Update {uploaded_file.name} via Streamlit", file_content, existing_file.sha)
+            st.success(f"Document '{uploaded_file.name}' updated successfully in the LLM documents folder on GitHub!")
+        except:
+            # Create a new file
+            repo.create_file(file_path, f"Add {uploaded_file.name} via Streamlit", file_content)
+            st.success(f"Document '{uploaded_file.name}' uploaded successfully to the LLM documents folder on GitHub!")
 
     st.header("Search Assistant")
-    st.write("This  generates responses using a Deepseek r1 think model.")
+    st.write("This generates responses using a Deepseek r1 think model.")
 
-    
-    prompt = st.text_input(" prompt to start search")
+    prompt = st.text_input("Prompt to start search")
     
     # Toggle for streaming
     stream = st.checkbox("Enable streaming", value=True) 
