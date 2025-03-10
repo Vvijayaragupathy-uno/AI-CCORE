@@ -1,7 +1,7 @@
 import streamlit as st
 import os
 from admin_search import get_llm_response
-PASSWORD = = st.secrets["PASSWORD"]
+PASSWORD = st.secrets["PASSWORD"]
 ADMIN_PASSWORD = PASSWORD
 
 def is_admin():
